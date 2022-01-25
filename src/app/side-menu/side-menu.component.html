@@ -1,0 +1,14 @@
+<ul class="list-group app-side-menu">
+  <li *ngIf="!auth" class="list-group-item" routerLinkActive="active">
+    <a 
+    class="app-side-menu__link"
+      routerLink="/auth"
+    >Login/Registration</a>
+  </li>
+  <li *ngIf="auth" class="list-group-item" routerLinkActive="active">
+    <a 
+    class="app-side-menu__link"
+      routerLink="/logout"
+    >Logout</a>
+  </li>
+</ul>

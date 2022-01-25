@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-4 col-12 offset-md-4 offset-0">
+    <mat-tab-group>
+      <mat-tab label="Login">
+        <form class="d-flex flex-column" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Login</mat-label>
+            <input formControlName="login_username" matInput placeholder="Placeholder">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input formControlName="login_password" type="password" matInput placeholder="Placeholder">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          </mat-form-field>
+          <button type="submit" (click)="openSnackbar('zdarova', 'dissmiss')" [disabled]="!loginForm.valid" mat-flat-button color="primary">Login</button>
+        </form>
+              
+      </mat-tab>
+      <mat-tab label="Registration">
+        <form class="d-flex flex-column" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Login</mat-label>
+            <input formControlName="reg_username" matInput placeholder="Placeholder">
+            <mat-icon matSuffix>how_to_reg</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input formControlName="reg_password" type="password" matInput placeholder="Placeholder">
+            <mat-icon matSuffix>how_to_reg</mat-icon>
+          </mat-form-field>
+          <button type="submit" (click)="openSnackbar('zdarova', 'dissmiss')" [disabled]="!registerForm.valid" mat-flat-button color="accent">Registration</button>
+        </form>
+              
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
