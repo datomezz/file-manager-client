@@ -44,4 +44,12 @@ export class FilesComponent implements OnInit {
     this.userFiles = filtredFiles;
   }
 
+  filterFiles(filename) {
+    this.filesService
+      .filterFiles(filename)
+      .subscribe((data: IFileResponse[]) => {
+        this.userFiles = data;
+      });
+  }
+
 }

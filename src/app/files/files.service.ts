@@ -35,7 +35,11 @@ export class FilesService {
 
     return this.http
       .post(`${this.api_url}/file/upload`, formData); 
+  }
 
+  filterFiles(filename: string): Observable<any> {
+    return this.http
+      .get(`${this.api_url}/file/search/${filename}`)
   }
 
 }
