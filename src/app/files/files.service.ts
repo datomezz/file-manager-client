@@ -1,9 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
 import { Observable } from "rxjs";
 import { AuthService } from "../auth/auth.service";
-import { IFileResponse } from "./types/file-response.interface";
 import { IUpdateFile } from "./types/update-file.interface";
 
 @Injectable()

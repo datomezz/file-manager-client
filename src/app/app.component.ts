@@ -11,6 +11,14 @@ export class AppComponent implements OnInit {
   opened: boolean = false;
 
   ngOnInit(): void {
-    this.authService.onCheck();
+    this.authService.onCheck()
+      .subscribe((data: any) => {
+        const { message } = data;
+        if (message === "SUCCESS") {
+          this.authService.isAuth.next(true);
+        }
+      })
   }
+
+
 }

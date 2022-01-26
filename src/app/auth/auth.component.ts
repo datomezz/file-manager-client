@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
@@ -12,6 +12,7 @@ import { CreateUserDto } from './types/create-user.dto';
 export class AuthComponent implements OnInit {
   public loginForm!: FormGroup;
   public registerForm!: FormGroup;
+  public isAuth: boolean = false;
 
   constructor(
     private readonly router: Router,
@@ -26,7 +27,15 @@ export class AuthComponent implements OnInit {
     this.registerForm = new FormGroup({
       "reg_username": new FormControl(null, [Validators.required, Validators.minLength(4)]),
       "reg_password": new FormControl(null, [Validators.required, Validators.minLength(4)])
-    })
+    });
+
+    this.authService.isAuth.subscribe((bool: boolean) => {
+      this.isAuth = bool;
+    });
+
+    if (this.isAuth) {
+      this.router.navigate(["/files"]);
+    }
   }
 
   onLogin() {

@@ -1,5 +1,5 @@
 <ul class="list-group app-side-menu">
-  <a *ngIf="auth" class="list-group-item app-side-menu__link" routerLinkActive="active" routerLink="/auth">Login/Registration</a>
-  <a class="list-group-item app-side-menu__link" routerLinkActive="active" routerLink="/files">Files</a>
-  <a *ngIf="!auth" class="list-group-item app-side-menu__link" routerLinkActive="active" routerLink="/logout">Logout</a>
+  <a *ngIf="!isAuth" class="list-group-item app-side-menu__link" routerLinkActive="active" routerLink="/auth">Login/Registration</a>
+  <a *ngIf="isAuth" class="list-group-item app-side-menu__link" routerLinkActive="active" routerLink="/files">Files</a>
+  <button *ngIf="isAuth" (click)="onLogout()" class="list-group-item app-side-menu__link">Logout</button>
 </ul>

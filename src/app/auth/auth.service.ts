@@ -4,20 +4,21 @@ import { CreateUserDto } from "./types/create-user.dto";
 import { environment } from "src/environments/environment"; 
 import { map, catchError } from "rxjs/operators";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { Observable, BehaviorSubject } from "rxjs";
 
 @Injectable()
 export class AuthService {
   constructor(private http: HttpClient, private snackbar : MatSnackBar) { }
-  public isAuth: boolean = false;
+  public isAuth = new BehaviorSubject<boolean>(false);
   public api_url: string = environment.api_url;
 
   saveToken(token : string) {
-    this.isAuth = true;
+    this.isAuth.next(true);
     localStorage.setItem("accessToken", token);
   }
 
   removeToken() {
-    this.isAuth = false;
+    this.isAuth.next(false);
     localStorage.removeItem("accessToken");
   }
 
@@ -29,15 +30,7 @@ export class AuthService {
   onCheck() {
     return this.http
       .get(`${this.api_url}/user/check`)
-      .subscribe((data: any) => {
-        const { message } = data;
-        if (message === "SUCCESS") {
-          console.log("SUCCESS", message);
-          this.isAuth = true;
-        } else {
-          this.isAuth = false;
-        }
-      })
+
   }
 
   onLogin(userData: CreateUserDto) {
@@ -74,8 +67,14 @@ export class AuthService {
     
   }
 
-  onLogout() {
-
+  onLogout() : Observable<any>{
+    return this.http
+      .get(`${this.api_url}/user/logout`)
+      .pipe(map((data : {message : string}) => {
+        if (data.message === "SUCCESS") {
+          this.isAuth.next(false);
+        }
+      }))
   }
   
 }
