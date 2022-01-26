@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
+import { CreateUserDto } from './types/create-user.dto';
 
 @Component({
   selector: 'app-auth',
@@ -11,7 +13,9 @@ export class AuthComponent implements OnInit {
   public loginForm!: FormGroup;
   public registerForm!: FormGroup;
 
-  constructor(private readonly snackbar : MatSnackBar) { }
+  constructor(
+    private readonly router: Router,
+    private readonly authService: AuthService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -25,14 +29,35 @@ export class AuthComponent implements OnInit {
     })
   }
 
-  onSubmit() {
-    console.log("submit");
+  onLogin() {
+    const { value } = this.loginForm;
+    const userData: CreateUserDto = {
+      username : value.login_username,
+      password : value.login_password
+    }
+
+    this.authService
+      .onLogin(userData)
+      .subscribe((token) => {
+        this.authService.saveToken(token);
+        this.router.navigate(["/files"]);
+      });
+      
   }
 
-  openSnackbar(msg : string, action :any) {
-    this.snackbar.open(msg, action, {
-      duration: 2000,
-    });
+  onRegistration() {
+    const { value } = this.registerForm;
+    const userData: CreateUserDto = {
+      username : value.reg_username,
+      password : value.reg_password
+    }
+
+    this.authService
+      .onRegistration(userData)
+      .subscribe((token: string) => {
+        this.authService.saveToken(token);
+        this.router.navigate(["/files"]);
+      })
   }
 
 }

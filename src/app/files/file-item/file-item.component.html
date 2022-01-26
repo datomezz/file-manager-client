@@ -1,49 +1,40 @@
 <mat-card class="app-card">
   <mat-card-header>
     <mat-card-title>
-      <p contenteditable="true" class="w-100" #titleRef>testdsadddddddddddddddddddddddddddddddddddddddddddddddd</p>
+      <p contenteditable="true" class="w-100" #titleRef>{{file.customName}}</p>
     </mat-card-title>
   </mat-card-header>
 
   <div class="app-card__extension d-flex align-items-center">
     <span>Extension : </span>
-    <span class="app-card__extension">.ts</span>
+    <span class="app-card__extension">{{file.ext}}</span>
   </div>
   <mat-card-content>
     <div class="app-card__description">
 
       <div class="app-card__description__field">
         <span class="app-card__description__key me-3 font-weight-bold">
-          key :
+          Size :
         </span>
         <span class="app-card__description__value">
-          value
+          {{file.size}}
         </span>
       </div>
       <div class="app-card__description__field">
         <span class="app-card__description__key me-3 font-weight-bold">
-          key :
+          Mime Type :
         </span>
         <span class="app-card__description__value">
-          value
+          {{file.mimeType}}
         </span>
       </div>
-      <div class="app-card__description__field">
-        <span class="app-card__description__key me-3 font-weight-bold">
-          key :
-        </span>
-        <span class="app-card__description__value">
-          value
-        </span>
-      </div>
-
 
     </div>
   </mat-card-content>
   <mat-card-actions class="d-flex justify-content-between" align="end">
     <button (click)="onEdit()" class="btn-warning" mat-raised-button>Edit</button>
     <div class="d-flex">
-      <button mat-raised-button color="primary">Download</button>
+      <button (click)="onDownload()" mat-raised-button color="primary">Download</button>
       <button mat-raised-button color="warn">Remove</button>
     </div>
   </mat-card-actions>

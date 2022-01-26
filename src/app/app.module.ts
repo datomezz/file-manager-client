@@ -24,6 +24,11 @@ import { FileItemComponent } from './files/file-item/file-item.component';
 import { FileFilterComponent } from './files/file-filter/file-filter.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { FileUploadComponent } from './files/file-upload/file-upload.component';
+import { AuthService } from './auth/auth.service';
+import { AuthGuard } from './auth/auth.guard';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthIntercepter } from './auth/auth.intercepter';
+import { FilesService } from './files/files.service';
 
 
 
@@ -53,9 +58,17 @@ import { FileUploadComponent } from './files/file-upload/file-upload.component';
     MatTabsModule,
     MatListModule,
     MatCardModule,
-    MatDialogModule
+    MatDialogModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    FilesService,
+    AuthGuard,
+    [
+      {provide : HTTP_INTERCEPTORS, useClass : AuthIntercepter, multi : true}
+    ]
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
+import { AuthGuard } from './auth/auth.guard';
+import { AuthService } from './auth/auth.service';
 import { FilesComponent } from './files/files.component';
 
 const routes: Routes = [
-  { path: "files", component: FilesComponent },
+  { path: "files", canActivate: [AuthGuard], component: FilesComponent },
   { path: "auth", component: AuthComponent },
   { path: "", component: AuthComponent },
   { path: "**", component: AuthComponent },
