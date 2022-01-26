@@ -1,8 +1,8 @@
-<form>
+<div>
   <div class="mb-2">
     <label class="form-label" for="customFile">Choose Your File</label>
-    <input type="file" class="form-control" id="customFile" />
+    <input type="file" name="file" class="form-control" id="customFile" #inputRef />
   </div>
-  <button type="submit" class="btn btn-primary">Upload</button>
+  <button (click)="onUpload()" type="submit" class="btn btn-primary">Upload</button>
 
-</form>
+</div>

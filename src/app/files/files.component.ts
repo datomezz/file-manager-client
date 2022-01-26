@@ -1,4 +1,4 @@
-import {Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { catchError } from 'rxjs';
 import { FileUploadComponent } from './file-upload/file-upload.component';
@@ -15,13 +15,14 @@ export class FilesComponent implements OnInit {
   public userFiles!: IFileResponse[];
   public isLoading: boolean = true;
   public isError: boolean = false;
+  public dialogClose: boolean = false;
 
   openDialog() {
-    const dialogRef = this.dialog.open(FileUploadComponent);
+    const dialog = this.dialog.open(FileUploadComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialog.componentInstance.fileUploadEvent.subscribe((file) => {
+      this.userFiles.push(file);
+    })
   }
 
   ngOnInit(): void {
@@ -42,6 +43,5 @@ export class FilesComponent implements OnInit {
     const filtredFiles = this.userFiles.filter(item => item._id !== id);
     this.userFiles = filtredFiles;
   }
-
 
 }

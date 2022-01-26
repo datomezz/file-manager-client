@@ -31,4 +31,13 @@ export class FilesService {
       .post(`${this.api_url}/file/delete`, {id})
   }
 
+  uploadFile(file) : Observable<any> {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    return this.http
+      .post(`${this.api_url}/file/upload`, formData); 
+
+  }
+
 }
