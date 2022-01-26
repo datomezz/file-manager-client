@@ -1,8 +1,10 @@
 import { ViewChild, ElementRef, Component, OnInit, Input } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { FilesService } from '../files.service';
 import { IFileResponse } from '../types/file-response.interface';
+import { IUpdateFile } from '../types/update-file.interface';
 
 @Component({
   selector: 'app-file-item',
@@ -14,7 +16,7 @@ export class FileItemComponent implements OnInit {
   @Input("file") file!: IFileResponse;
   public downloadUrl!: string;
 
-  constructor(private authService : AuthService, private router : Router, private fileService : FilesService) { }
+  constructor(private authService : AuthService, private snackbar : MatSnackBar, private fileService : FilesService) { }
 
   ngOnInit(): void {
     console.log("file", this.file._id)
@@ -28,7 +30,26 @@ export class FileItemComponent implements OnInit {
   }
  
   onEdit() {
-    console.log('title', this.titleRef.nativeElement.innerText);
+    const id = this.file._id || "0";
+    const customName = this.titleRef.nativeElement.innerText;
+
+    if (customName === this.file.customName) {
+      this.snackbar.open("For Edit Change Title", "", { duration: 3000 });
+      return;
+    }
+
+    const body: IUpdateFile = {
+      id,
+      customName 
+    }
+
+    this.fileService
+      .editFile(body)
+      .subscribe(data => {
+        this.snackbar.open("File Was Updated", "", {
+          duration : 3000
+        });
+      })
   }
 
 
