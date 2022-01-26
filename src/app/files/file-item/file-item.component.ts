@@ -1,6 +1,5 @@
-import { ViewChild, ElementRef, Component, OnInit, Input } from '@angular/core';
+import { EventEmitter, ViewChild, ElementRef, Component, OnInit, Input, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { FilesService } from '../files.service';
 import { IFileResponse } from '../types/file-response.interface';
@@ -14,6 +13,7 @@ import { IUpdateFile } from '../types/update-file.interface';
 export class FileItemComponent implements OnInit {
   @ViewChild("titleRef") titleRef!: ElementRef;
   @Input("file") file!: IFileResponse;
+  @Output() deleteFileEvent = new EventEmitter<string>();
   public downloadUrl!: string;
 
   constructor(private authService : AuthService, private snackbar : MatSnackBar, private fileService : FilesService) { }
@@ -44,7 +44,7 @@ export class FileItemComponent implements OnInit {
 
     this.fileService
       .editFile(body)
-      .subscribe(data => {
+      .subscribe(() => {
         this.snackbar.open("File Was Updated", "", {
           duration : 3000
         });
@@ -56,7 +56,13 @@ export class FileItemComponent implements OnInit {
 
     this.fileService
       .deleteFile(id)
-      .subscribe(data => {})
+      .subscribe(() => {
+        this.snackbar.open("File Was Deleted", "", {
+          duration: 3000
+        });
+
+        this.deleteFileEvent.emit(id);
+      })
   }
 
 

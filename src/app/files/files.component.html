@@ -10,7 +10,7 @@
     *ngFor="let file of userFiles"
     class="col-xl-3 col-lg-4 col-md-6 col-12 mb-4"
   >
-    <app-file-item [file]="file"></app-file-item>
+    <app-file-item (deleteFileEvent)="deleteFile($event)" [file]="file"></app-file-item>
   </div>
 
 </div>

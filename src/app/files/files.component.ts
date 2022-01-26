@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, OnInit, ViewChild, SimpleChanges, ElementRef } from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { catchError } from 'rxjs';
 import { FileUploadComponent } from './file-upload/file-upload.component';
@@ -36,6 +36,11 @@ export class FilesComponent implements OnInit {
         this.userFiles = data;
         this.isLoading = false;
       });
+  }
+
+  deleteFile(id: string) {
+    const filtredFiles = this.userFiles.filter(item => item._id !== id);
+    this.userFiles = filtredFiles;
   }
 
 

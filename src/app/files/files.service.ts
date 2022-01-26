@@ -12,7 +12,6 @@ export class FilesService {
 
   constructor(
     private http: HttpClient,
-    private snackbar: MatSnackBar,
     private authService : AuthService
   ) { }
 
