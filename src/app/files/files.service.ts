@@ -27,4 +27,9 @@ export class FilesService {
       .put(`${this.api_url}/file/edit`, body)
   }
 
+  deleteFile(id: string): Observable<any> {
+    return this.http
+      .post(`${this.api_url}/file/delete`, {id})
+  }
+
 }

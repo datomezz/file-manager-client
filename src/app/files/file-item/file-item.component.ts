@@ -19,8 +19,7 @@ export class FileItemComponent implements OnInit {
   constructor(private authService : AuthService, private snackbar : MatSnackBar, private fileService : FilesService) { }
 
   ngOnInit(): void {
-    console.log("file", this.file._id)
-    console.log('title', this.titleRef);
+
   }
 
   onDownload() : void {
@@ -52,6 +51,13 @@ export class FileItemComponent implements OnInit {
       })
   }
 
+  onDelete() {
+    const id = this.file._id || "0";
+
+    this.fileService
+      .deleteFile(id)
+      .subscribe(data => {})
+  }
 
 
 }

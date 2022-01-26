@@ -30,7 +30,6 @@ export class AuthService {
     return this.http
       .get(`${this.api_url}/user/check`)
       .subscribe((data: any) => {
-        console.log("data", data);
         const { message } = data;
         if (message === "SUCCESS") {
           console.log("SUCCESS", message);
